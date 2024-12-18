@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from tabulate import tabulate
+import os
 
 precio = 320.45
 moneda = 'Bitcoin'
@@ -16,8 +17,18 @@ print(f"Market Cap: ${market_cap:,.0f}")
 print("\n" + "-" * 50)  # Separador
 
 # Cargar los datos
-file_path = r"C:\Users\josef\OneDrive\Desktop\proyecto\cryptocurrency_historical_prices.csv"
+file_path = "ProyectoPython\src\data\cryptocurrency_historical_prices.csv"
 data = pd.read_csv(file_path)
+
+if not os.path.exists(file_path):
+    print(f"Error: El archivo {file_path} no existe.")
+else:
+    data = pd.read_csv(file_path)
+    print("Exploración inicial de los datos:")
+    print(data.info())
+    print("\nPrimeras 5 filas de los datos:")
+    print(data.head())
+    data['Fecha'] = pd.to_datetime(data['Fecha'])
 
 # Exploración inicial
 print("Exploración inicial de los datos:")
