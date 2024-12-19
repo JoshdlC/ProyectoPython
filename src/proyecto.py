@@ -82,15 +82,42 @@ def generarGrafico ():
         print("Primero debe procesar los datos")
         return
     
+    output_dir = "ProyectoPython\src\img"
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+        
+    print('-'*50)
+    print("\nGenerando gráfico de barras con los precios de las criptomonedas en 2015...")
     plt.figure(figsize=(12, 6))
     sns.barplot(x='NOMBRE DE LA MONEDA', y='PRECIO', data=data_2015)
     plt.title('Precio de las criptomonedas en 2015')
     plt.xticks(rotation=45)
-    
     plt.savefig("Criptomonedas.png")
     
-    plt.show()
+    # plt.show()
+    
+    for i in range(0, 4):
+        print(f"{data_2015['NOMBRE DE LA MONEDA'].iloc[i]}: ${data_2015['PRECIO'].iloc[i]:.2f}")
+
+        moneda = data_2015['NOMBRE DE LA MONEDA'].iloc[i]
+        precio = data_2015['PRECIO'].iloc[i]
+        volumen = data_2015['VOLUMEN DE TRANSACCIONES'].iloc[i]
+        market_cap = data_2015['MARKET CAP'].iloc[i]
+        
+        plt.figure(figsize=(8, 4))
+        sns.barplot(x=['Precio', 'Volumen de Transacciones', 'Market Cap'], y=[precio, volumen, market_cap])
+        plt.title(f'{moneda} en 2015')
+        plt.ylabel('Valor')
+        plt.xticks(rotation=45)
+        
+        # Guardar la gráfica como un archivo PNG
+        plt.savefig(os.path.join(output_dir, f"{moneda}_2015.png"))
+        
+        # plt.show()
+
     print('-'*50)
+    
+    
     
     
 def calcularMedia():
